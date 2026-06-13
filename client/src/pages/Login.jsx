@@ -1,79 +1,49 @@
-import { useState,
-useContext } from "react";
-
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
-
-import {
-  AuthContext,
-} from "../context/AuthContext";
-
-import { useNavigate }
-from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import "../pages/Login.css";
 
 function Login() {
-  const navigate =
-    useNavigate();
-
-  const { login } =
-    useContext(AuthContext);
-
-  const [email,
-    setEmail] =
-    useState("");
-
-  const [password,
-    setPassword] =
-    useState("");
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const submit = async (e) => {
     e.preventDefault();
 
-    const res =
-      await api.post(
-        "/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+    const res = await api.post("/auth/login", {
+      email,
+      password,
+    });
 
-    login(
-      res.data.user,
-      res.data.accessToken
-    );
-
+    login(res.data.user, res.data.accessToken);
     navigate("/profile");
   };
 
   return (
-    <form onSubmit={submit}>
-      <h1>Login</h1>
+    <div className="login-container">
+      <form className="login-form" onSubmit={submit}>
+        <h1>Login</h1>
 
-      <input
-        placeholder="Email"
-        value={email}
-        onChange={(e) =>
-          setEmail(
-            e.target.value
-          )
-        }
-      />
+        <input
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) =>
-          setPassword(
-            e.target.value
-          )
-        }
-      />
+        <input
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <button>
-        Login
-      </button>
-    </form>
+        <button type="submit">Login</button>
+      </form>
+    </div>
   );
 }
 

@@ -1,28 +1,23 @@
-import {
-  useContext,
-} from "react";
-
-import {
-  AuthContext,
-} from "../context/AuthContext";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import "./Profile.css";
 
 function Profile() {
-  const { user } =
-    useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
-    <div>
-      <h1>Profile</h1>
+    <div className="profile-container">
+      <div className="profile-card">
+        <h1>Profile</h1>
 
-      <p>
-        Username:
-        {user?.username}
-      </p>
+        <div className="profile-info">
+          <span>Username:</span> {user?.username}
+        </div>
 
-      <p>
-        Email:
-        {user?.email}
-      </p>
+        <div className="profile-info">
+          <span>Email:</span> {user?.email}
+        </div>
+      </div>
     </div>
   );
 }
